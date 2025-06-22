@@ -1,6 +1,5 @@
 package com.example.Cagero_Automatico.RestControler;
 
-import com.example.Cagero_Automatico.DAO.RolDAOImplementation;
 import com.example.Cagero_Automatico.DAO.UsuarioDAOImplementation;
 import com.example.Cagero_Automatico.JPA.Result;
 import org.springframework.beans.factory.annotation.Autowired;
