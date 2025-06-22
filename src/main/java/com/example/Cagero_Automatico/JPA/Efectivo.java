@@ -17,10 +17,10 @@ public class Efectivo {
     private String Tipo;
     
     @Column(name = "denominacion")
-    private String Denominacion;
+    private double denominacion;
             
     @Column(name = "cantidad")
-    private String Cantidad;
+    private int cantidad;
 
     public int getIdEfectivo() {
         return IdEfectivo;
@@ -38,21 +38,22 @@ public class Efectivo {
         this.Tipo = Tipo;
     }
 
-    public String getDenominacion() {
-        return Denominacion;
+    public double getDenominacion() {
+        return denominacion;
     }
 
-    public void setDenominacion(String Denominacion) {
-        this.Denominacion = Denominacion;
+    public void setDenominacion(double denominacion) {
+        this.denominacion = denominacion;
     }
 
-    public String getCantidad() {
-        return Cantidad;
+    public int getCantidad() {
+        return cantidad;
     }
 
-    public void setCantidad(String Cantidad) {
-        this.Cantidad = Cantidad;
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
-    
+
+   
     
 }

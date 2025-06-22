@@ -8,8 +8,11 @@ import com.example.Cagero_Automatico.JPA.Result;
 import java.math.BigDecimal;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @CrossOrigin(origins = "*")         //para permitir que tu frontend (en localhost:8080) haga peticiones a tu backend (en localhost:8081)
 @RestController
@@ -34,4 +37,14 @@ public class EfectivoController {
         return ResponseEntity.ok(total);
     }
 
+    @PostMapping("/retiro")
+   public ResponseEntity<?> retirarDinero(@RequestParam double monto) {
+    Result result = efectivoDAOImplemetation.Retiro(monto);
+
+    if (result.correct) {
+        return ResponseEntity.ok(result.object); // JSON con el Map de retiro
+    } else {
+        return ResponseEntity.badRequest().body(result.errorMessage);
+    }
+}
 }

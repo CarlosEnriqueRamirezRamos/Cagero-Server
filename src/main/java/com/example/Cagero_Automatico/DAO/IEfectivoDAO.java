@@ -4,4 +4,5 @@ import com.example.Cagero_Automatico.JPA.Result;
 
 public interface IEfectivoDAO {
     Result GetAll();    
+    Result Retiro(double monto);    
 }
