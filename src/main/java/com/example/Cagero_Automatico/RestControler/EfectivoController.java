@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Cagero_Automatico.DAO.EfectivoDAOImplemetation;
 import com.example.Cagero_Automatico.JPA.Result;
 import java.math.BigDecimal;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.ui.Model;
@@ -38,13 +39,23 @@ public class EfectivoController {
     }
 
     @PostMapping("/retiro")
-   public ResponseEntity<?> retirarDinero(@RequestParam double monto) {
-    Result result = efectivoDAOImplemetation.Retiro(monto);
+    public ResponseEntity<?> retirarDinero(@RequestParam double monto) {
+        Result result = efectivoDAOImplemetation.Retiro(monto);
 
-    if (result.correct) {
-        return ResponseEntity.ok(result.object); // JSON con el Map de retiro
-    } else {
-        return ResponseEntity.badRequest().body(result.errorMessage);
+        if (result.correct) {
+            return ResponseEntity.ok(result.object); // JSON con el Map de retiro
+        } else {
+            return ResponseEntity.badRequest().body(result.errorMessage);
+        }
     }
-}
+
+    @GetMapping("/rellenar")
+    public ResponseEntity<Void> ejecutarReestablecer() {
+        try {
+            jdbcTemplate.execute("BEGIN EfectivoReestablecer; END;");
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

@@ -3,6 +3,7 @@ package com.example.Cagero_Automatico.DAO;
 import com.example.Cagero_Automatico.JPA.Efectivo;
 import com.example.Cagero_Automatico.JPA.Result;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.StoredProcedureQuery;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import java.util.LinkedHashMap;
@@ -76,11 +77,29 @@ public class EfectivoDAOImplemetation implements IEfectivoDAO {
                 result.object = retiro;
             } else {
                 result.correct = false;
-                result.errorMessage = "Errror al retirar el monto: " + Retiro(monto) + " con la cantidad disponible en el cajero";
+                result.errorMessage = "Error al retirar el monto solicitado";
+                result.errorMessage = "El cagero no cuenta con el dinero suficiente";
             }
         } catch (Exception ex) {
             result.correct = false;
             result.errorMessage = ex.getMessage();
+            result.ex = ex;
+        }
+        return result;
+    }
+
+    @Override
+    public Result Rellenar() {
+        Result result = new Result();
+        try {
+            StoredProcedureQuery query = entityManager
+                    .createStoredProcedureQuery("EfectivoReestablecer");
+            query.execute();
+            result.correct = true;
+            result.message = "El efectivo se restablecio correctamente";
+        } catch (Exception ex) {
+            result.correct = false;
+            result.errorMessage = "Error al restablecer el Efectivo"+ex.getMessage();
             result.ex = ex;
         }
         return result;

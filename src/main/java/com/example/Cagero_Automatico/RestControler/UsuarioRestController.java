@@ -19,6 +19,7 @@ public class UsuarioRestController {
         return ResponseEntity.ok(UsuarioDAOImplementation.GetAll());
     }
     
+    @GetMapping("/status")
     public ResponseEntity Status(int idUsuarios){
         Result result = new Result();
         return ResponseEntity.ok(UsuarioDAOImplementation.Status(idUsuarios));
